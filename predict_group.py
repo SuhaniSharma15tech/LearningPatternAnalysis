@@ -1,0 +1,1 @@
+# we need a script that reads data from csv therefore here i consider using numpy 

@@ -59,3 +59,40 @@ def reduce_record(scaled_record):
         reduced_record['Exam_Score'] = scaled_record['Exam_Score']
 
     return reduced_record
+
+
+# this function is for prediction on dataframes not single record
+def predict_pc(data5, centroid5):
+    # 1. Initialize output dictionary
+    # Example: {"cluster1": [indices], "cluster2": [indices]...}
+    persona_map = {cluster: [] for cluster in persona_centroids.keys()}
+
+    def calcdistance(x, y):
+        return sqrt(sum((a - b) ** 2 for a, b in zip(x, y)))
+
+    # 2. Iterate through the 5-theme dataframe
+    for index, row in data5.iterrows():
+        # Theme order must match your centroid training order
+        point = [
+            row['Academic_Drive'], 
+            row['Resource_Access'], 
+            row['Family_Capital'], 
+            row['Personal_Wellbeing'], 
+            row['Environmental_Stability']
+        ]
+        
+        best_cluster = None
+        mindistance = float('inf')
+        
+        # 3. Find the closest Persona centroid
+        for cluster_name, centroid_coords in persona_centroids.items():
+            dist = calcdistance(point, centroid_coords)
+            if dist < mindistance:
+                mindistance = dist
+                best_cluster = cluster_name
+        
+        # 4. Store the original index
+        persona_map[best_cluster].append(index)
+        
+    return persona_map
+    # this is a dictionary 
