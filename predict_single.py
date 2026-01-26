@@ -68,7 +68,7 @@ def numerical_mapping(record):
 # the function that scales all the numeric values between 0 and 1
 def scale(numeric_record):
     for i in numeric_record.keys():
-                numeric_record[i] = (numeric_record[i] - reference_dict[key]["min"]) / (reference_dict[key]["max"] - reference_dict[key]["min"])
+                numeric_record[i] = (numeric_record[i] - reference_dict[i]["min"]) / (reference_dict[i]["max"] - reference_dict[i]["min"])
     return numeric_record
 
 # the function that gets data ready for 3 cluster model
@@ -159,7 +159,7 @@ def predict(record):
         for i in centroid5.keys():
             p=0
             for j in range(5): #--> since we have 5 feature lists
-                p+=(centroid5[i][j]-data5[i[j]])**2
+                p+=(centroid5[i][j]-data5[j])**2
             dis5.append(p)
         pc=dis5.index(min(dis5))+1
         # pc is persona cluster number
