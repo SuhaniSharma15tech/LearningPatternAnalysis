@@ -19,8 +19,10 @@ reference_dict = {"Hours_Studied": {"min": 1.0, "max": 44.0},
     "Distance_from_Home": {"min": -1.0, "max": 2.0},
     "Gender": {"min": 0.0, "max": 1.0},
     "Exam_Score": {"min": 55.0, "max": 101.0}}
+
 # 3 cluster model centroids
 centroid3={'cluster1': [0.26407826, 0.4980978 ], 'cluster2': [0.28523119, 0.83384127], 'cluster3': [0.24843434, 0.16748274]}
+
 # 5 cluster model centroids
 centroid5={'cluster1': [0.48434735, 0.51876055, 0.35172773, 0.32871612, 0.69163936], 'cluster2': [0.4705168 , 0.51762281, 0.72973323, 0.31982215, 0.69597686], 'cluster3': [0.47009039, 0.51307385, 0.73488024, 0.67072522, 0.73466401], 'cluster4':[0.47551055, 0.50872846, 0.34926632, 0.67422251, 0.72645642], 'cluster5':[0.4701202 , 0.51256057, 0.55062768, 0.58281026, 0.38376831]}
 
@@ -66,7 +68,7 @@ def numerical_mapping(record):
 # the function that scales all the numeric values between 0 and 1
 def scale(numeric_record):
     for i in numeric_record.keys():
-                academic_rec[i] = (academic_rec[i] - reference_dict[key]["min"]) / (reference_dict[key]["max"] - reference_dict[key]["min"])
+                numeric_record[i] = (numeric_record[i] - reference_dict[key]["min"]) / (reference_dict[key]["max"] - reference_dict[key]["min"])
     return numeric_record
 
 # the function that gets data ready for 3 cluster model
@@ -161,7 +163,8 @@ def predict(record):
             dis5.append(p)
         pc=dis5.index(min(dis5))+1
         # pc is persona cluster number
-        
+
+        return {"academic_performance_cluster_number":ac,"persona_cluster_number":pc}
     if record.get("Exam_Score"):
         twenty_attributes()
     else:
