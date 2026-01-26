@@ -5,20 +5,8 @@ def reduce_to_five_themes(input_file, output_file):
     # 1. Load the numerically mapped data
     df = pd.read_csv(input_file)
     
-    # 2. Invert "Negative" features so that 1.0 always = "Better for Success"
-    # Distance: Near(0) is better than Far(2) -> Invert
-    # Disabilities: No(0) is better than Yes(1) -> Invert
-    df['Distance_from_Home'] = df['Distance_from_Home'].max() - df['Distance_from_Home']
-    df['Learning_Disabilities'] = df['Learning_Disabilities'].max() - df['Learning_Disabilities']
 
-    # 3. Scale all 19 predictors between 0 and 1
-    # This ensures a "high score" in one category (like Previous_Scores 0-100) 
-    # doesn't drown out a binary category (like Internet_Access 0-1).
-    scaler = MinMaxScaler()
-    predictor_cols = df.columns.difference(['Exam_Score'])
-    df[predictor_cols] = scaler.fit_transform(df[predictor_cols])
-
-    # 4. Create the 5 Thematic Features
+    # 2. Create the 5 Thematic Features
     reduced_df = pd.DataFrame()
 
     # Theme 1: Academic Drive (Effort & Motivation)
@@ -45,7 +33,7 @@ def reduce_to_five_themes(input_file, output_file):
     # Keep the original Exam_Score as our target variable
     reduced_df['Exam_Score'] = df['Exam_Score']
 
-    # 5. Save the final 5-dimension dataset
+    # 3. Save the final 5-dimension dataset
     reduced_df.to_csv(output_file, index=False)
     print(f"Successfully reduced 20 attributes to 5 themes. Saved to: {output_file}")
     return reduced_df
