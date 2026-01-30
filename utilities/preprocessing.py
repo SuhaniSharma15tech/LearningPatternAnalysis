@@ -64,9 +64,9 @@ def process_dataframe(df):
     
     return df
 
-def scale_csv_file(input_file):
+def scale_csv_file(df):
     """Helper to read a file and process it."""
-    df = pd.read_csv(input_file)
+    
     return process_dataframe(df)
 
 def scale_single_record(record_dict):

@@ -1,5 +1,5 @@
 import pandas as pd
-
+from math import sqrt
 def pick2rec(input_data):
     """
     Extracts 'Exam_Score' and 'Previous_Scores' for the 3-cluster model.
@@ -30,7 +30,7 @@ def pick2rec(input_data):
     else:
         raise TypeError("Input must be a pandas DataFrame or a dictionary.")
 
-def predict_ac(data3, centroid3):
+def predict_ac(data3, centroids):
     # 1. Initialize output dictionary
     prediction_map = {cluster: [] for cluster in centroids.keys()}
     

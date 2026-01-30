@@ -1,4 +1,5 @@
 import pandas as pd
+from math import sqrt
 
 # Define the theme mappings globally for easy maintenance
 THEME_MAP = {
@@ -65,7 +66,7 @@ def reduce_record(scaled_record):
 def predict_pc(data5, centroid5):
     # 1. Initialize output dictionary
     # Example: {"cluster1": [indices], "cluster2": [indices]...}
-    persona_map = {cluster: [] for cluster in persona_centroids.keys()}
+    persona_map = {cluster: [] for cluster in centroid5.keys()}
 
     def calcdistance(x, y):
         return sqrt(sum((a - b) ** 2 for a, b in zip(x, y)))
@@ -85,7 +86,7 @@ def predict_pc(data5, centroid5):
         mindistance = float('inf')
         
         # 3. Find the closest Persona centroid
-        for cluster_name, centroid_coords in persona_centroids.items():
+        for cluster_name, centroid_coords in centroid5.items():
             dist = calcdistance(point, centroid_coords)
             if dist < mindistance:
                 mindistance = dist
