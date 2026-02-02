@@ -158,27 +158,3 @@ def visualise(data):
             }
         }
 
-data={
-    "Hours_Studied": 23,
-    "Attendance": 84,
-    "Parental_Involvement": "Low",
-    "Access_to_Resources": "High",
-    "Extracurricular_Activities": "No",
-    "Sleep_Hours": 7,
-    "Previous_Scores": 73,
-    "Motivation_Level": "Low",
-    "Internet_Access": "Yes",
-    "Tutoring_Sessions": 0,
-    "Family_Income": "Low",
-    "Teacher_Quality": "Medium",
-    "School_Type": "Public",
-    "Peer_Influence": "Positive",
-    "Physical_Activity": 3,
-    "Learning_Disabilities": "No",
-    "Parental_Education_Level": "High School",
-    "Distance_from_Home": "Near",
-    "Gender": "Male",
-}
-print(visualise(data))
-print("\n\n\n\n")
-print(visualise("data/rawdata.csv"))
