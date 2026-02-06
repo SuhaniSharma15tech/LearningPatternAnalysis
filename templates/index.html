@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TeachInsights AI</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- custom css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>TeachInsights AI</h1>
+  <p>AI-Powered Supervised & Unsupervised Learning</p>
+</header>
+
+<div class="container">
+
+  <div class="toggle-buttons">
+    <button id="csvBtn" class="active">📂 Class CSV Analysis</button>
+    <button id="singleBtn">👤 Single Student Prediction</button>
+  </div>
+
+  <!-- CSV -->
+  <div id="csvCard" class="card active">
+    <span class="badge">Unsupervised Learning</span>
+    <h2>Upload Class Dataset</h2>
+
+    <input type="file" id="csvFile" accept=".csv">
+    <button class="proceed-btn" onclick="SubmitCSV()">Run AI Analysis</button>
+  </div>
+
+  <!-- STUDENT -->
+  <div id="singleCard" class="card">
+    <span class="badge">Supervised Learning</span>
+    <h2>Student Performance Prediction</h2>
+
+        <form id="studentForm">
+
+
+        <label>Hours Studied:</label>
+        <input type="number" name="Hours_Studied" required>
+
+        <label>Attendance (%):</label>
+        <input type="number" name="Attendance" min="0" max="100" required>
+
+        <label>Sleep Hours:</label>
+        <input type="number" name="Sleep_Hours" min="0" max="24" required>
+
+
+
+        <label>Previous Scores:</label>
+        <input type="number" name="Previous_Scores" min="0" max="100" required> </input>
+
+
+        <label>Tutoring Sessions:</label>
+         <input type="number" name="Tutoring_Sessions" required>
+
+
+        <label>Physical Activity (Hours/Week):</label>
+        <input type="number" name="Physical_Activity" required>
+
+
+
+        <label>Parental Involvement:</label>
+        <select name="Parental_Involvement">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+
+
+        <label>Access to Resources:</label>
+        <select name="Access_to_Resources">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+        </select>
+
+
+        <label>Extracurricular Activities:</label>
+        <select name="Extracurricular_Activities">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+        </select>
+
+
+        <label>Motivation Level:</label>
+        <select name="Motivation_Level">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+        </select>
+
+
+
+        <label>Internet Access:</label>
+        <select name="Internet_Access">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+        </select>
+
+
+ 
+        <label>Family Income:</label>
+        <select name="Family_Income">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+        </select>
+
+
+
+        <label>Teacher Quality:</label>
+        <select name="Teacher_Quality">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+        </select>
+
+
+        <label>School Type:</label>
+        <select name="School_Type">
+                <option value="Public">Public</option>
+                <option value="Private">Private</option>
+        </select>
+
+
+        <label>Peer Influence:</label>
+        <select name="Peer_Influence">
+                <option value="Positive">Positive</option>
+                <option value="Neutral">Neutral</option>
+                <option value="Negative">Negative</option>
+        </select>
+
+
+        <label>Learning Disabilities:</label>
+        <select name="Learning_Disabilities">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+        </select>
+
+
+        <label>Parental Education Level:</label>
+        <select name="Parental_Education_Level">
+                <option value="High School">High School</option>
+                <option value="College">College</option>
+                <option value="Postgraduate">Postgraduate</option>
+        </select>
+
+
+
+        <label>Distance from Home:</label>
+        <select name="Distance_from_Home">
+                <option value="Near">Near</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Far">Far</option>
+        </select>
+
+
+
+        <label>Gender:</label>
+        <select name="Gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+        </select>
+
+
+        <button type="submit" class="submit-btn">Submit Data</button>
+    </form>
+  
+
+    <!-- insights -->
+    <div class="insights" id="studentInsight">
+      <h3>AI Teaching Insights</h3>
+      <div class="output"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- the charts logic -->
+<div id="student">
+  <p>Predicted Score: <strong id="predictedScore"></strong></p>
+  <div class="chart-container">
+    <canvas id="spiderChart"></canvas>
+  </div>
+</div>
+
+<div  id="batch">
+
+  <div class="chart-container">
+    <canvas id="academicBar"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="personaBar"></canvas>
+  </div>
+
+  <h2>Persona Distribution per Academic Cluster</h2>
+
+  <div class="chart-container">
+    <canvas id="steadyPie"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="improvedPie"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="decliningPie"></canvas>
+  </div>
+</div>
+
+<!-- custom js -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
+<script>
+  // seems to me as the toggle logic
+const csvBtn = document.getElementById("csvBtn");
+const singleBtn = document.getElementById("singleBtn");
+const csvCard = document.getElementById("csvCard");
+const singleCard = document.getElementById("singleCard");
+
+csvBtn.onclick = () => {
+  csvBtn.classList.add("active");
+  singleBtn.classList.remove("active");
+  csvCard.classList.add("active");
+  singleCard.classList.remove("active");
+};
+
+singleBtn.onclick = () => {
+  singleBtn.classList.add("active");
+  csvBtn.classList.remove("active");
+  singleCard.classList.add("active");
+  csvCard.classList.remove("active");
+};
+
+async function SubmitCSV() {
+  const file = document.getElementById("csvFile").files[0];
+  if (!file) return alert("Please upload CSV");
+  const fd = new FormData();
+  fd.append("csv_file", file);
+
+  const response = await fetch("/analyzeGroup", { method:"POST", body: fd });
+  const data = await response.json();
+  // now you have the result json
+  render_charts(data)
+
+}
+
+
+// single student logic
+document.getElementById('studentForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const response = await fetch('/analyzeStudent', { method: 'POST', body: formData });
+        const data = await response.json();  
+        render_charts(data)       
+    }
+
+
+
+</script>
+
+</body>
+</html>
