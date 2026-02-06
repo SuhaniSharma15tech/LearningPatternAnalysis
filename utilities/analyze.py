@@ -17,9 +17,9 @@ except ImportError:
 
 # 3-cluster model centroids (Academic Performance)
 CENTROID3 = {
-    'cluster1': [0.26407826, 0.4980978], # Yellow (Baseline)
-    'cluster2': [0.28523119, 0.83384127], # Green (High Growth)
-    'cluster3': [0.24843434, 0.16748274]  # Red (Critical)
+    'Steady Progress Students': [0.26407826, 0.4980978], # Yellow (Baseline)
+    'Highly Improved Students': [0.28523119, 0.83384127], # Green (High Growth)
+    'Declining Students': [0.24843434, 0.16748274]  # Red (Critical)
 }
 
 # 5-cluster model centroids (Behavioural Personas)
@@ -61,6 +61,10 @@ def get_complete_analysis(data):
         # Batch behavior remains as it is (Phase 1 group analysis)
         if isinstance(data, str):
             df = pd.read_csv(data)
+        elif hasattr(data, 'read'):
+        # If it has a 'read' method, it's a file-like object
+            df = pd.read_csv(data)
+            is_batch = True
         else:
             df = data.copy()
 
@@ -97,7 +101,7 @@ def visualise(data):
         # Result container
         result = {
             "type": "single",
-            "is_predicted_score": analysis['is_predicted'],
+            "is_predicted": analysis['is_predicted'],
             "charts": {
                 "spider_chart": {
                     "data": [
@@ -150,7 +154,7 @@ def visualise(data):
 
         return {
             "type": "batch",
-            "is_predicted_batch": analysis['is_predicted'],
+            "is_predicted": analysis['is_predicted'],
             "charts": {
                 "academic_distribution": academic_pie,
                 "overall_persona_distribution": persona_pie,
@@ -158,27 +162,3 @@ def visualise(data):
             }
         }
 
-data={
-    "Hours_Studied": 23,
-    "Attendance": 84,
-    "Parental_Involvement": "Low",
-    "Access_to_Resources": "High",
-    "Extracurricular_Activities": "No",
-    "Sleep_Hours": 7,
-    "Previous_Scores": 73,
-    "Motivation_Level": "Low",
-    "Internet_Access": "Yes",
-    "Tutoring_Sessions": 0,
-    "Family_Income": "Low",
-    "Teacher_Quality": "Medium",
-    "School_Type": "Public",
-    "Peer_Influence": "Positive",
-    "Physical_Activity": 3,
-    "Learning_Disabilities": "No",
-    "Parental_Education_Level": "High School",
-    "Distance_from_Home": "Near",
-    "Gender": "Male",
-}
-print(visualise(data))
-print("\n\n\n\n")
-print(visualise("data/rawdata.csv"))
