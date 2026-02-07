@@ -77,7 +77,8 @@
     .chart-container {
       width: 650px;
       margin-bottom: 40px;
+      background-color: #fff;
     }
-    #student,#batch{
+    #single,#batch{
       display:none
     }

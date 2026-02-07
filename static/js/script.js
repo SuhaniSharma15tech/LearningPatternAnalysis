@@ -1,41 +1,87 @@
+// Object to store chart instances to prevent overlapping/glitching
+let chartInstances = {};
 
-function render_charts(MODEL_OUTPUT){
-    if (MODEL_OUTPUT.type==="single"){
+function update_layout(type) {
+  const grid = document.getElementById(type)
+  if (!grid) return;
+
+  if (type === "single") {
+    // Single view: One column, centered, restricted width for the spider chart
+    grid.style.display = "flex";
+    grid.style.flexDirection = "column";
+    grid.style.alignItems = "center";
+    grid.style.gap = "20px";
+  } else {
+    // Batch view: Standard 2-column dashboard grid
+    // grid.style.display = "grid";
+    // grid.style.gridTemplateColumns = "repeat(auto-fit, minmax(450px, 1fr))";
+    // grid.style.gap = "25px";
+
+    //  the above code didnt feel right ,so i wrote it using flexbox
+     grid.style.display="flex";
+     grid.style.flexDirection = "column";
+
+     const bars=document.getElementById("bars");
+     bars.style.display="flex";
+     bars.style.flexDirection = "row";
+     bars.style.gap = "50px";
+
+     const pies=document.getElementById("pies");
+     pies.style.display="flex";
+     pies.style.flexDirection = "row";
+     pies.style.gap = "20px";
+
+
+
+
+  }
+}
+
+function render_charts(MODEL_OUTPUT) {
+  // 1. Clear existing charts to fix "weird" overlapping behavior
+  Object.values(chartInstances).forEach(chart => chart.destroy());
+  chartInstances = {};
+
+  // 2. Adjust grid organization based on data type
+  update_layout(MODEL_OUTPUT.type);
+  if (MODEL_OUTPUT.type==="single"){
       // logic for spider charts
       // single student score value 
       document.getElementById("predictedScore").innerText = MODEL_OUTPUT.score_value;
-     document.getElementById("student").style.display="block"
- 
+     
+  //  spider chart
       new Chart(document.getElementById("spiderChart"), {
-        type: "radar",
-        data: {
-          labels: MODEL_OUTPUT.charts.spider_chart.data.map(d => d.subject),
-          datasets: [{
-            label: "Student Profile",
-            data: MODEL_OUTPUT.charts.spider_chart.data.map(d => d.value),
-            fill: true
-          }]
-        },
-        options: {
-          scales: {
-            r: { min: 0, max: 100 }
-          }
-        }
-      });
-          }
-        
-    else  if (MODEL_OUTPUT.type==="batch"){
-            // this is academic bar graph;
-      new Chart(document.getElementById("academicBar"), {
-        type: "bar",
-        data: {
-          labels: MODEL_OUTPUT.charts.academic_distribution.map(d => d.name),
-          datasets: [{
-            label: "Students",
-            data: MODEL_OUTPUT.charts.academic_distribution.map(d => d.value)
-          }]
-        },
-        options: {
+          type: "radar",
+          data: {
+              labels: MODEL_OUTPUT.charts.spider_chart.data.map(d => d.subject),
+              datasets: [{
+                label: "Student Profile",
+                data: MODEL_OUTPUT.charts.spider_chart.data.map(d => d.value),
+                fill: true
+              }]
+            },
+          options: {
+              scales: {
+                r: { min: 0, max: 100 }
+              }
+            }
+          });
+              }
+
+
+   else if (MODEL_OUTPUT.type === "batch") {
+    // Render Academic Bar
+    chartInstances["academicBar"] = new Chart(document.getElementById("academicBar"), {
+      type: "bar",
+      data: {
+        labels: MODEL_OUTPUT.charts.academic_distribution.map(d => d.name),
+        datasets: [{
+          label: "Students",
+          data: MODEL_OUTPUT.charts.academic_distribution.map(d => d.value),
+          backgroundColor: ['#F5F227','#27F579', '#F20A22']
+        }]
+      },
+      options: {indexAxis: 'y' ,
           plugins: {
             tooltip: {
               callbacks: {
@@ -46,18 +92,21 @@ function render_charts(MODEL_OUTPUT){
           }
         }
       });
+  
 
-      // here is Persona distribution bar graph;
-      new Chart(document.getElementById("personaBar"), {
-        type: "bar",
-        data: {
-          labels: MODEL_OUTPUT.charts.overall_persona_distribution.map(d => d.name),
-          datasets: [{
-            label: "Students",
-            data: MODEL_OUTPUT.charts.overall_persona_distribution.map(d => d.value)
-          }]
-        },
-        options: {
+    // Render Persona Bar (Horizontal)
+    chartInstances["personaBar"] = new Chart(document.getElementById("personaBar"), {
+      type: "bar",
+      data: {
+        labels: MODEL_OUTPUT.charts.overall_persona_distribution.map(d => d.name),
+        datasets: [{
+          label: "Students",
+          data: MODEL_OUTPUT.charts.overall_persona_distribution.map(d => d.value),
+          backgroundColor: '#00c6ff'
+        }]
+      },
+
+      options: {indexAxis: 'y',
           plugins: {
             tooltip: {
               callbacks: {
@@ -70,22 +119,22 @@ function render_charts(MODEL_OUTPUT){
       });
 
 
-      // pie chart for the academic clusters;
-      const pieCanvasIds = ["steadyPie", "improvedPie", "decliningPie"];
-      const clusterEntries = Object.entries(
-        MODEL_OUTPUT.charts.persona_per_academic_cluster
-      );
+    // Render Cluster Pies
+    const pieCanvasIds = ["steadyPie", "improvedPie", "decliningPie"];
+    const clusterEntries = Object.entries(MODEL_OUTPUT.charts.persona_per_academic_cluster);
 
-      clusterEntries.forEach(([clusterName, personas], i) => {
-        new Chart(document.getElementById(pieCanvasIds[i]), {
-          type: "pie",
-          data: {
-            labels: personas.map(p => p.persona),
-            datasets: [{
-              data: personas.map(p => p.count)
-            }]
-          },
-          options: {
+    clusterEntries.forEach(([clusterName, personas], i) => {
+      if (i >= pieCanvasIds.length) return;
+      const canvasId = pieCanvasIds[i];
+      chartInstances[canvasId] = new Chart(document.getElementById(canvasId), {
+        type: "pie",
+        data: {
+          labels: personas.map(p => p.persona),
+          datasets: [{
+            data: personas.map(p => p.count)
+          }]
+        },
+        options: {
             plugins: {
               tooltip: {
                 callbacks: {
@@ -97,6 +146,5 @@ function render_charts(MODEL_OUTPUT){
           }
         });
       });
-      document.getElementById("batch").style.display='grid'
           }
-      }
+}
