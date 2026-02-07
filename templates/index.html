@@ -20,6 +20,7 @@
   <p>AI-Powered Supervised & Unsupervised Learning</p>
 </header>
 
+<!-- the main dashboard thing -->
 <div class="container">
 
   <div class="toggle-buttons">
@@ -186,16 +187,17 @@
 
 </div>
 
-<!-- the charts logic -->
-<div id="student">
+
+<!-- ------------the charts logic---------------- -->
+<div id="single" class="grid">
   <p>Predicted Score: <strong id="predictedScore"></strong></p>
   <div class="chart-container">
     <canvas id="spiderChart"></canvas>
   </div>
 </div>
 
-<div  id="batch">
-
+<div  id="batch" class="grid">
+  <div id="bars">
   <div class="chart-container">
     <canvas id="academicBar"></canvas>
   </div>
@@ -203,9 +205,10 @@
   <div class="chart-container">
     <canvas id="personaBar"></canvas>
   </div>
+  </div>
 
   <h2>Persona Distribution per Academic Cluster</h2>
-
+  <div id="pies">
   <div class="chart-container">
     <canvas id="steadyPie"></canvas>
   </div>
@@ -218,11 +221,16 @@
     <canvas id="decliningPie"></canvas>
   </div>
 </div>
+</div>
+<!-- the AI insight part -->
+<div id="insights">
+  <!-- here we will show AI insights -->
+</div>
 
-<!-- custom js -->
+<!-- custom js file  -->
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
-
+<!-- dunno why have i kept it here ,may consider moving it -->
 <script>
   // seems to me as the toggle logic
 const csvBtn = document.getElementById("csvBtn");
