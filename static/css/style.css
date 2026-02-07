@@ -45,12 +45,7 @@
       border:none;
     }
 
-    .grid {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-
+    
     .proceed-btn {
       width:100%;
       padding:16px;
@@ -75,8 +70,8 @@
 
 /* the charts css */
     .chart-container {
-      width: 650px;
-      margin-bottom: 40px;
+      width: 30%;
+      margin: 40px;
       background-color: #fff;
     }
     #single,#batch{

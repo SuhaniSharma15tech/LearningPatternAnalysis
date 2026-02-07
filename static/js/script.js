@@ -12,24 +12,18 @@ function update_layout(type) {
     grid.style.alignItems = "center";
     grid.style.gap = "20px";
   } else {
-    // Batch view: Standard 2-column dashboard grid
-    // grid.style.display = "grid";
-    // grid.style.gridTemplateColumns = "repeat(auto-fit, minmax(450px, 1fr))";
-    // grid.style.gap = "25px";
+      grid.style.display = "flex";
+      grid.style.flexDirection = "column";
 
-    //  the above code didnt feel right ,so i wrote it using flexbox
-     grid.style.display="flex";
-     grid.style.flexDirection = "column";
+      const bars = document.getElementById("bars");
+      bars.style.display = "flex";
+      bars.style.flexWrap = "row"; // Crucial for responsiveness
+      bars.style.gap = "40px";
 
-     const bars=document.getElementById("bars");
-     bars.style.display="flex";
-     bars.style.flexDirection = "row";
-     bars.style.gap = "50px";
-
-     const pies=document.getElementById("pies");
-     pies.style.display="flex";
-     pies.style.flexDirection = "row";
-     pies.style.gap = "20px";
+      const pies = document.getElementById("pies");
+      pies.style.display = "flex";
+      pies.style.flexWrap = "row"; // Crucial for responsiveness
+      pies.style.gap = "20px";
 
 
 
@@ -41,8 +35,11 @@ function render_charts(MODEL_OUTPUT) {
   // 1. Clear existing charts to fix "weird" overlapping behavior
   Object.values(chartInstances).forEach(chart => chart.destroy());
   chartInstances = {};
+  
+  // 2.this thing ensures that all the chart-containers disappear everytime you re-run the function
+  document.querySelectorAll(".grid").forEach(el => el.style.display='none')
 
-  // 2. Adjust grid organization based on data type
+  // 3. Adjust grid organization based on data type
   update_layout(MODEL_OUTPUT.type);
   if (MODEL_OUTPUT.type==="single"){
       // logic for spider charts
@@ -147,4 +144,8 @@ function render_charts(MODEL_OUTPUT) {
         });
       });
           }
+}
+
+function display_AI_Insights(MODEL_OUTPUT){
+  
 }
