@@ -32,17 +32,52 @@
   <div id="csvCard" class="card active">
     <span class="badge">Unsupervised Learning</span>
     <h2>Upload Class Dataset</h2>
-
+    
+    <!-- the input taking mechanism -->
     <input type="file" id="csvFile" accept=".csv">
     <button class="proceed-btn" onclick="SubmitCSV()">Run AI Analysis</button>
+
+    <!-- the chart logic for batch case -->
+    <div  id="batch" class="grid">
+        <div id="bars">
+        <div class="chart-container">
+          <canvas id="academicBar"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="personaBar"></canvas>
+        </div>
+        </div>
+
+        <h2>Persona Distribution per Academic Cluster</h2>
+        <div id="pies">
+        <div class="chart-container">
+          <canvas id="steadyPie"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="improvedPie"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="decliningPie"></canvas>
+        </div>
+      </div>
+      <!-- the AI insight block -->
+      <div  class="insights">
+        <!-- here we will show AI insights -->
+      </div>
+      </div>
+
   </div>
 
   <!-- STUDENT -->
   <div id="singleCard" class="card">
     <span class="badge">Supervised Learning</span>
     <h2>Student Performance Prediction</h2>
-
-        <form id="studentForm">
+     
+    <!-- the form logic -->
+    <form id="studentForm">
 
 
         <label>Hours Studied:</label>
@@ -60,7 +95,7 @@
         <input type="number" name="Previous_Scores" min="0" max="100" required> </input>
 
         <label>Exam Scores:</label>
-        <input type="number" name="Exam_Score" min="0" max="100" required> </input>
+        <input type="number" name="Exam_Score" min="0" max="100"> </input>
 
         <label>Tutoring Sessions:</label>
          <input type="number" name="Tutoring_Sessions" required>
@@ -178,49 +213,25 @@
 
         <button type="submit" class="proceed-btn">Submit Data</button>
     </form>
+    
+    <!-- the card logic for single student case -->
+    <div id="single" class="grid">
+        <p>Predicted Score: <strong id="predictedScore"></strong></p>
+        <div class="chart-container">
+          <canvas id="spiderChart"></canvas>
+        </div>
+        <!-- the AI insight part -->
+        <div id="single_insights" class="insights">
+           <!-- here we will show AI insights -->
+        </div>
+    </div>
+
+  </div>
+
   
 </div>
-</div>
 
 
-<!-- ------------the charts logic---------------- -->
-<div id="single" class="grid">
-  <p>Predicted Score: <strong id="predictedScore"></strong></p>
-  <div class="chart-container">
-    <canvas id="spiderChart"></canvas>
-  </div>
-</div>
-
-<div  id="batch" class="grid">
-  <div id="bars">
-  <div class="chart-container">
-    <canvas id="academicBar"></canvas>
-  </div>
-
-  <div class="chart-container">
-    <canvas id="personaBar"></canvas>
-  </div>
-  </div>
-
-  <h2>Persona Distribution per Academic Cluster</h2>
-  <div id="pies">
-  <div class="chart-container">
-    <canvas id="steadyPie"></canvas>
-  </div>
-
-  <div class="chart-container">
-    <canvas id="improvedPie"></canvas>
-  </div>
-
-  <div class="chart-container">
-    <canvas id="decliningPie"></canvas>
-  </div>
-</div>
-</div>
-<!-- the AI insight part -->
-<div id="insights" class="grid">
-  <!-- here we will show AI insights -->
-</div>
 
 <!-- custom js file  -->
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
