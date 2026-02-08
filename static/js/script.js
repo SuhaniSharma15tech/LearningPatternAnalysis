@@ -1,3 +1,9 @@
+function display_AI_Insights(MODEL_OUTPUT){
+  insight_card=document.getElementById("insights");
+  insight_card.innerHTML=`<p>${MODEL_OUTPUT.ai_insight}</p>`
+  insight_card.style.display="block"
+}
+
 // Object to store chart instances to prevent overlapping/glitching
 let chartInstances = {};
 
@@ -17,12 +23,12 @@ function update_layout(type) {
 
       const bars = document.getElementById("bars");
       bars.style.display = "flex";
-      bars.style.flexWrap = "row"; // Crucial for responsiveness
+      bars.style.flexWrap = "wrap"; // Crucial for responsiveness
       bars.style.gap = "40px";
 
       const pies = document.getElementById("pies");
       pies.style.display = "flex";
-      pies.style.flexWrap = "row"; // Crucial for responsiveness
+      pies.style.flexWrap = "wrap"; // Crucial for responsiveness
       pies.style.gap = "20px";
 
 
@@ -41,6 +47,7 @@ function render_charts(MODEL_OUTPUT) {
 
   // 3. Adjust grid organization based on data type
   update_layout(MODEL_OUTPUT.type);
+
   if (MODEL_OUTPUT.type==="single"){
       // logic for spider charts
       // single student score value 
@@ -144,8 +151,9 @@ function render_charts(MODEL_OUTPUT) {
         });
       });
           }
+    
+    // insights 
+    display_AI_Insights(MODEL_OUTPUT)
 }
 
-function display_AI_Insights(MODEL_OUTPUT){
-  
-}
+
