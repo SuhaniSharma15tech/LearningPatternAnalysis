@@ -1,0 +1,48 @@
+--------------5 cluster model-------------
+{'cluster1': array([0.48434735, 0.51876055, 0.35172773, 0.32871612, 0.69163936]), 'cluster2': array([0.4705168 , 0.51762281, 0.72973323, 0.31982215, 0.69597686]), 'cluster3': array([0.47009039, 0.51307385, 0.73488024, 0.67072522, 0.73466401]), 'cluster4': array([0.47551055, 0.50872846, 0.34926632, 0.67422251, 0.72645642]), 'cluster5': array([0.4701202 , 0.51256057, 0.55062768, 0.58281026, 0.38376831])}
+
+--------------3 cluster model -------------
+{'cluster1': array([0.26407826, 0.4980978 ]), 'cluster2': array([0.28523119, 0.83384127]), 'cluster3': array([0.24843434, 0.16748274])}
+
+
+
+#how about we analyse each of the 19 columns too
+#lets see what that gives us
+
+#lets give names to the clusters
+'cluster1': consistently average performers
+'cluster2': improved students
+'cluster3': students with degrading grades
+
+# 5 cluster model names
+
+# final mapping for cluster 3
+{"cluster1":"Steady_Progress_Students","cluster2":"Highly_Improved_Students","cluster3":"Declining_Students"
+}
+
+student_record = {
+    "Hours_Studied": 23,
+    "Attendance": 84,
+    "Parental_Involvement": "Low",
+    "Access_to_Resources": "High",
+    "Extracurricular_Activities": "No",
+    "Sleep_Hours": 7,
+    "Previous_Scores": 73,
+    "Motivation_Level": "Low",
+    "Internet_Access": "Yes",
+    "Tutoring_Sessions": 0,
+    "Family_Income": "Low",
+    "Teacher_Quality": "Medium",
+    "School_Type": "Public",
+    "Peer_Influence": "Positive",
+    "Physical_Activity": 3,
+    "Learning_Disabilities": "No",
+    "Parental_Education_Level": "High School",
+    "Distance_from_Home": "Near",
+    "Gender": "Male",
+}
+
+{'type': 'batch', 'is_predicted': False, 'charts': {'academic_distribution': [{'name': 'Steady Progress Students', 'value': 2229, 'percentage': 33.74}, {'name': 'Highly Improved Students', 'value': 2205, 'percentage': 33.37}, {'name': 'Declining Students', 'value': 2173, 'percentage': 32.89}], 'overall_persona_distribution': [{'name': 'cluster1', 'value': 1067, 'percentage': 16.15}, {'name': 'cluster2', 'value': 1405, 'percentage': 21.27}, {'name': 'cluster3', 'value': 1994, 'percentage': 30.18}, {'name': 'cluster4', 'value': 1684, 'percentage': 25.49}, {'name': 'cluster5', 'value': 457, 'percentage': 6.92}], 'persona_per_academic_cluster': {'Steady Progress Students': [{'persona': 'cluster1', 'count': 364, 'percentage': 16.33}, {'persona': 'cluster2', 'count': 482, 'percentage': 21.62}, {'persona': 'cluster3', 'count': 668, 'percentage': 29.97}, {'persona': 'cluster4', 'count': 543, 'percentage': 24.36}, {'persona': 'cluster5', 'count': 172, 'percentage': 7.72}], 'Highly Improved Students': [{'persona': 'cluster1', 'count': 380, 'percentage': 17.23}, {'persona': 'cluster2', 'count': 440, 'percentage': 19.95}, {'persona': 'cluster3', 'count': 654, 'percentage': 29.66}, {'persona': 'cluster4', 'count': 581, 'percentage': 26.35}, {'persona': 'cluster5', 'count': 150, 'percentage': 6.8}], 'Declining Students': [{'persona': 'cluster1', 'count': 323, 'percentage': 14.86}, {'persona': 'cluster2', 'count': 483, 'percentage': 22.23}, {'persona': 'cluster3', 'count': 672, 'percentage': 30.92}, {'persona': 'cluster4', 'count': 560, 'percentage': 25.77}, {'persona': 'cluster5', 'count': 135, 'percentage': 6.21}]}}}
+
+
+
