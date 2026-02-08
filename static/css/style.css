@@ -74,6 +74,7 @@
       margin: 40px;
       background-color: #fff;
     }
+    /* set  this way to ensure that u dont see the chart canvases first time u land the site */
     #single,#batch{
       display:none
     }
@@ -81,47 +82,47 @@
 /* insights */
 /* --- AI Insights Block Styling --- */
 /* Target the insights div to look exactly like .card */
-#insights {
-  display: none; /* Controlled by JS */
-  background: rgba(255, 255, 255, 0.1);
-  padding: 35px;
-  border-radius: 20px;
-  margin-top: 40px; /* Matching the margin spacing of the dashboard */
-  width: 100%;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
+    .insights {
+      display: none; /* Controlled by JS */
+      background: rgba(255, 255, 255, 0.1);
+      padding: 35px;
+      border-radius: 20px;
+      margin-top: 40px; /* Matching the margin spacing of the dashboard */
+      width: 100%;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
 
-/* Internal styling for the AI content */
-#insights h2 {
-  margin-top: 10px;
-  font-size: 1.8rem;
-  color: #fff;
-}
+    /* Internal styling for the AI content */
+    .insights h2 {
+      margin-top: 10px;
+      font-size: 1.8rem;
+      color: #fff;
+    }
 
-#insights .ai-content {
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1rem;
-}
+    .insights .ai-content {
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+    }
 
-#insights ul {
-  padding-left: 20px;
-}
+    .insights ul {
+      padding-left: 20px;
+    }
 
-#insights li {
-  margin-bottom: 15px;
-}
+    .insights li {
+      margin-bottom: 15px;
+    }
 
-/* Reusing your badge style for the AI tag */
-#insights .badge {
-  background: #00c6ff;
-  color: #fff;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
+    /* Reusing your badge style for the AI tag */
+    .insights .badge {
+      background: #00c6ff;
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }

@@ -1,5 +1,6 @@
 function display_AI_Insights(MODEL_OUTPUT){
-  insight_card=document.getElementById("insights");
+  const type= MODEL_OUTPUT.type
+  insight_card=document.getElementById(type).querySelector(".insights");
   insight_card.innerHTML=`<p>${MODEL_OUTPUT.ai_insight}</p>`
   insight_card.style.display="block"
 }
@@ -43,10 +44,11 @@ function render_charts(MODEL_OUTPUT) {
   chartInstances = {};
   
   // 2.this thing ensures that all the chart-containers disappear everytime you re-run the function
-  document.querySelectorAll(".grid").forEach(el => el.style.display='none')
+  // document.querySelectorAll(".grid").forEach(el => el.style.display='none')
 
   // 3. Adjust grid organization based on data type
   update_layout(MODEL_OUTPUT.type);
+
 
   if (MODEL_OUTPUT.type==="single"){
       // logic for spider charts
