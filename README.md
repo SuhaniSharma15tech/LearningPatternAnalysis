@@ -34,7 +34,7 @@ here are our weights on the given dataset (visualised)
 This model enables us to find the weights of the 19 features in determining the Exam_Score of the student, so that we can control the most positively or negatively influencing factors and help the student in  improving their scores.
 
 # The system architecture
-### the file structure
+### the project structure
 - Backend : flask
 - frontend :HTML, CSS, Javascript(Vanilla), chart.js for viualising charts
 - Machine learning logic : lives in the utilities package which is imported in the backend
@@ -71,7 +71,7 @@ Suhani Sharma
 - contribute us with new ideas about how cann we change our architecture , approach or suggesting us a new use case for the project
 - guide us about how we can make this project scalable
 - test our project and expose bugs
-- 
+  
 # How to setup the environment for this project?
 Install all the packages mentioned in the requirements.txt
 Get yourself a gemini API key
