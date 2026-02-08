@@ -8,6 +8,26 @@ function display_AI_Insights(MODEL_OUTPUT){
 // Object to store chart instances to prevent overlapping/glitching
 let chartInstances = {};
 
+// Mapping of chart IDs to their respective analysis modes
+const MODE_CHART_MAP = {
+  single: ["spiderChart"],
+  batch: ["academicBar", "personaBar", "steadyPie", "improvedPie", "decliningPie"]
+};
+
+/**
+ * Destroys charts specific to the provided mode.
+ */
+function clear_canvas(type) {
+  const chartsToClear = MODE_CHART_MAP[type] || [];
+
+  chartsToClear.forEach(id => {
+    if (chartInstances[id]) {
+      chartInstances[id].destroy();
+      delete chartInstances[id]; // Remove reference from the object
+    }
+  });
+}
+
 function update_layout(type) {
   const grid = document.getElementById(type)
   if (!grid) return;
@@ -39,24 +59,27 @@ function update_layout(type) {
 }
 
 function render_charts(MODEL_OUTPUT) {
-  // 1. Clear existing charts to fix "weird" overlapping behavior
-  Object.values(chartInstances).forEach(chart => chart.destroy());
-  chartInstances = {};
   
-  // 2.this thing ensures that all the chart-containers disappear everytime you re-run the function
+  // start with cleaning canvas 
+  clear_canvas(MODEL_OUTPUT.type)
+  
+  // this thing ensures that all the chart-containers disappear everytime you re-run the function
   // document.querySelectorAll(".grid").forEach(el => el.style.display='none')
 
-  // 3. Adjust grid organization based on data type
+  // Adjust grid organization based on data type
   update_layout(MODEL_OUTPUT.type);
 
 
   if (MODEL_OUTPUT.type==="single"){
       // logic for spider charts
       // single student score value 
+      if (MODEL_OUTPUT.is_predicted==="True"){
+        // write the logic which enables us to show the predictedScore only in the case when the score is predicted and not when its given
+      }
       document.getElementById("predictedScore").innerText = MODEL_OUTPUT.score_value;
      
-  //  spider chart
-      new Chart(document.getElementById("spiderChart"), {
+      //  spider chart
+      chartInstances["spiderChart"]=new Chart(document.getElementById("spiderChart"), {
           type: "radar",
           data: {
               labels: MODEL_OUTPUT.charts.spider_chart.data.map(d => d.subject),
@@ -76,6 +99,8 @@ function render_charts(MODEL_OUTPUT) {
 
 
    else if (MODEL_OUTPUT.type === "batch") {
+    // render new charts
+
     // Render Academic Bar
     chartInstances["academicBar"] = new Chart(document.getElementById("academicBar"), {
       type: "bar",
@@ -157,5 +182,4 @@ function render_charts(MODEL_OUTPUT) {
     // insights 
     display_AI_Insights(MODEL_OUTPUT)
 }
-
 
