@@ -4,6 +4,7 @@ import json
 from flask import Flask, jsonify, request, render_template
 from utilities import analyze
 
+
 app = Flask(__name__)
 
 # CONFIGURATION: Set your API Key here or as an environment variable
@@ -80,7 +81,6 @@ def analyze_group():
         "clusters": analysis_results['charts']['academic_distribution']
     }
     analysis_results['ai_insight'] = get_ai_insight(summary)
-    print(analysis_results['ai_insight'])
     return jsonify(analysis_results)
 
 @app.route("/analyzeStudent", methods=["POST"])
@@ -105,7 +105,6 @@ def analyze_student():
         "metrics": analysis_results['charts']['spider_chart']['data']
     }
     analysis_results['ai_insight'] = get_ai_insight(summary)
-    print(analysis_results['ai_insight'])
     return jsonify(analysis_results)
     
 

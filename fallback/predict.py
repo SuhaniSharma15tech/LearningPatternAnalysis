@@ -9,12 +9,13 @@ centroid5={'cluster1': [0.48434735, 0.51876055, 0.35172773, 0.32871612, 0.691639
 from utilities import persona, preprocessing,academics
 
 
-# run the prediction function
+#-----------run the prediction function-----------------------
 def predict(data):
     if type(data)==type({}):
-        # we are dealing with one record
+        # ----------we are dealing with one record------------
+        # put it through the preprocessing(upto scaling) pipeline
         processed_data=preprocessing.scale_single_record(data) 
-        #this is a dictionary
+        #-------------this is a dictionary---------------------
 
         # pass the record to 3 cluster model
         # get data ready
