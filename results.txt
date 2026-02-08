@@ -46,4 +46,3 @@ student_record = {
 
 
 
-GEMINI_API_KEY="AIzaSyC49guiv7iBdXnBJJO2jFfBcqZCbn-Ydq8"
