@@ -35,7 +35,7 @@
     
     <!-- the input taking mechanism -->
     <input type="file" id="csvFile" accept=".csv">
-    <button class="proceed-btn" onclick="SubmitCSV()">Run AI Analysis</button>
+    <button id="csvSubmitBtn" class="proceed-btn" onclick="SubmitCSV()">Run AI Analysis</button>
 
     <!-- the chart logic for batch case -->
     <div  id="batch" class="grid">
@@ -258,28 +258,62 @@ singleBtn.onclick = () => {
   csvCard.classList.remove("active");
 };
 
+// batch analysis
+
 async function SubmitCSV() {
   const file = document.getElementById("csvFile").files[0];
+  const btn = document.getElementById("csvSubmitBtn"); // Add this ID to your HTML button
+  
   if (!file) return alert("Please upload CSV");
+  
+  // Start Loading State
+  if(btn) {
+    btn.disabled = true;
+    btn.innerText = "⌛ Analyzing Dataset...";
+  }
+
   const fd = new FormData();
   fd.append("csv_file", file);
 
-  const response = await fetch("/analyzeGroup", { method:"POST", body: fd });
-  const data = await response.json();
-  // now you have the result json
-  render_charts(data)
-
+  try {
+    const response = await fetch("/analyzeGroup", { method: "POST", body: fd });
+    const data = await response.json();
+    
+    // Show the hidden batch container before rendering
+    render_charts(data);
+  } catch (err) {
+    console.error("Analysis failed", err);
+  } finally {
+    // Reset Button
+    if(btn) {
+      btn.disabled = false;
+      btn.innerText = "📂 Run Batch Analysis";
+    }
+  }
 }
-
 
 // single student logic
 document.getElementById('studentForm').onsubmit = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const originalText = btn.innerText;
+    
+    btn.disabled = true;
+    btn.innerText = "⚡ Predicting...";
+
+    try {
         const formData = new FormData(e.target);
         const response = await fetch('/analyzeStudent', { method: 'POST', body: formData });
-        const data = await response.json();  
-        render_charts(data)       
+        const data = await response.json();
+        
+        render_charts(data);
+    } catch (err) {
+        console.error(err);
+    } finally {
+        btn.disabled = false;
+        btn.innerText = originalText;
     }
+};
 
 
 
