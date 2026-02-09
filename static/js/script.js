@@ -14,9 +14,7 @@ const MODE_CHART_MAP = {
   batch: ["academicBar", "personaBar", "steadyPie", "improvedPie", "decliningPie"]
 };
 
-/**
- * Destroys charts specific to the provided mode.
- */
+// Destroys charts specific to the provided mode.
 function clear_canvas(type) {
   const chartsToClear = MODE_CHART_MAP[type] || [];
 
@@ -28,47 +26,14 @@ function clear_canvas(type) {
   });
 }
 
-function update_layout(type) {
-  const grid = document.getElementById(type)
-  if (!grid) return;
-
-  if (type === "single") {
-    // Single view: One column, centered, restricted width for the spider chart
-    grid.style.display = "flex";
-    grid.style.flexDirection = "column";
-    grid.style.alignItems = "center";
-    grid.style.gap = "20px";
-  } else {
-      grid.style.display = "flex";
-      grid.style.flexDirection = "column";
-
-      const bars = document.getElementById("bars");
-      bars.style.display = "flex";
-      bars.style.flexWrap = "wrap"; // Crucial for responsiveness
-      bars.style.gap = "40px";
-
-      const pies = document.getElementById("pies");
-      pies.style.display = "flex";
-      pies.style.flexWrap = "wrap"; // Crucial for responsiveness
-      pies.style.gap = "20px";
-
-
-
-
-  }
-}
-
+// renders charts
 function render_charts(MODEL_OUTPUT) {
-  
+  // displaying  the charts
+  document.getElementById(MODEL_OUTPUT.type).style.display="block"
+
   // start with cleaning canvas 
   clear_canvas(MODEL_OUTPUT.type)
   
-  // this thing ensures that all the chart-containers disappear everytime you re-run the function
-  // document.querySelectorAll(".grid").forEach(el => el.style.display='none')
-
-  // Adjust grid organization based on data type
-  update_layout(MODEL_OUTPUT.type);
-
 
   if (MODEL_OUTPUT.type==="single"){
       // logic for spider charts
@@ -179,6 +144,7 @@ function render_charts(MODEL_OUTPUT) {
       });
           }
     
+
     // insights 
     display_AI_Insights(MODEL_OUTPUT)
 }
